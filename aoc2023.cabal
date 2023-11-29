@@ -1,0 +1,108 @@
+cabal-version:       2.4
+name:                aoc2023
+version:             0.0.0.0
+synopsis:            See README for more info
+description:         See README for more info
+license:             MPL-2.0
+license-file:        LICENSE
+author:              Scott Sedgwick
+maintainer:          Scott Sedgwick <ssedgwick@cochlear.com>
+copyright:           2023 Scott Sedgwick
+build-type:          Simple
+extra-doc-files:     README.md
+                     CHANGELOG.md
+tested-with:         GHC == 9.6.1
+
+common common-options
+  build-depends:       base ^>= 4.18.0.0
+                     , array
+                     , containers
+                     , data-clist
+                     , deepseq
+                     , hashable
+                     , lens
+                     , matrix
+                     , monad-loops
+                     , parallel
+                     , parsec
+                     , safe
+                     , search-algorithms
+                     , split
+                     , text
+                     , time
+                     , trifecta
+                     , unordered-containers
+                     , vector
+  
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Widentities
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+  if impl(ghc >= 8.0)
+    ghc-options:       -Wredundant-constraints
+  if impl(ghc >= 8.2)
+    ghc-options:       -fhide-source-paths
+  if impl(ghc >= 8.4)
+    ghc-options:       -Wmissing-export-lists
+                       -Wpartial-fields
+  if impl(ghc >= 8.8)
+    ghc-options:       -Wmissing-deriving-strategies
+
+  default-language:    Haskell2010
+  default-extensions:  BangPatterns
+                       ConstraintKinds
+                       DeriveGeneric
+                       DerivingStrategies
+                       GeneralizedNewtypeDeriving
+                       InstanceSigs
+                       KindSignatures
+                       LambdaCase
+                       OverloadedStrings
+                       RecordWildCards
+                       ScopedTypeVariables
+                       StandaloneDeriving
+                       TupleSections
+                       TypeApplications
+                       ViewPatterns
+
+library
+  import:              common-options
+  hs-source-dirs:      src
+  exposed-modules:     Geometry
+                     , ParserUtils
+                     , Search
+                     , Dec01
+                     , Dec02
+                     , Dec03
+                     , Dec04
+                     , Dec05
+                     , Dec06
+                     , Dec07
+                     , Dec08
+                     , Dec09
+                     , Dec10
+                     , Dec11
+                     , Dec12
+                     , Dec13
+                     , Dec14
+                     , Dec15
+                     , Dec16
+                     , Dec17
+                     , Dec18
+                     , Dec19
+                     , Dec20
+                     , Dec21
+                     , Dec22
+                     , Dec23
+                     , Dec24
+                     , Dec25
+
+executable aoc2023
+  import:              common-options
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  build-depends:       aoc2023
+  ghc-options:         -threaded
+                       -rtsopts
+                       -with-rtsopts=-N
