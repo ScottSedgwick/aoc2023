@@ -4,7 +4,7 @@ import qualified Text.Trifecta as A
 import Data.Time.Clock (getCurrentTime, diffUTCTime)
 import ParserUtils (prtParserError, pEither)
 
-import Dec01 (Input, datafile, parser, part1, part2)
+import Dec02 (Input, datafile, parser, part1, part2)
 
 main :: IO ()
 main = do
