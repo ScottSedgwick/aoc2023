@@ -25,7 +25,7 @@ strToInt :: String -> Int
 strToInt = read
 
 part2 :: Input -> Int
-part2 = sum . map (\s -> read s :: Int) . map firstAndLast2
+part2 = sum . map (strToInt . firstAndLast2)
 
 firstAndLast2 :: String -> String
 firstAndLast2 xs = firstAndLast1 (findDigitsLR xs ++ findDigitsRL (reverse xs))
