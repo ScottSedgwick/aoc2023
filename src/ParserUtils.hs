@@ -6,10 +6,15 @@ module ParserUtils
   , intLine
   , intGroup
   , pEither
+  , pFirst
+  , pIgnoreChar
+  , pMatchStringAndReturn
   , prtParserError
+  , pString
   , restOfLine
   , string
   , strLine
+  , strLines
   , strN
   ) where
 
@@ -72,6 +77,9 @@ strLine = do
   _ <- (ignore A.newline) <|> A.eof
   pure s
 
+strLines :: A.Parser [String]
+strLines = A.many strLine
+
 strN :: Int -> A.Parser String
 strN n = do
   xs <- mapM (\_ -> A.anyChar) [1..n]
@@ -82,3 +90,17 @@ pEither f g r =
     case r of
         A.Success a -> f a
         A.Failure e -> g e
+
+pString :: A.Parser a -> String -> A.Result a
+pString p = A.parseString p mempty
+
+pMatchStringAndReturn :: String -> String -> A.Parser String
+pMatchStringAndReturn a b = string a >> pure b
+
+pIgnoreChar :: A.Parser String
+pIgnoreChar = A.notChar '\n' >> pure ""
+
+pFirst :: a -> [A.Parser a] -> A.Parser a
+pFirst d [] = pure d
+pFirst _ [x] = x
+pFirst d (x:xs) = x <|> pFirst d xs
