@@ -26,18 +26,18 @@ parser = A.many pGame
 
 pGame :: A.Parser Game
 pGame = do
-    _ <- string "Game "
+    ignore $ string "Game "
     n <- int
-    _ <- string ": "
+    ignore $ string ": "
     ts <- A.many pToken
     pure $ Game { number = n, tokens = ts }
 
 pToken :: A.Parser Token
 pToken = do
     n <- int
-    _ <- string " "
+    ignore $ string " "
     c <- pColor
-    _ <- (ignore $ string ", ") <|> (ignore $ string "; ") <|> (ignore $ eol)
+    ignore $ (ignore $ string ", ") <|> (ignore $ string "; ") <|> (ignore $ eol)
     pure $ Token { count = n, color = c }
 
 pColor :: A.Parser Color
@@ -45,22 +45,22 @@ pColor = pBlue <|> pGreen <|> pRed
 
 pBlue :: A.Parser Color
 pBlue = do
-    _ <- string "blue"
+    ignore $ string "blue"
     pure Blue
 
 pGreen :: A.Parser Color
 pGreen = do
-    _ <- string "green"
+    ignore $ string "green"
     pure Green
 
 pRed :: A.Parser Color
 pRed = do
-    _ <- string "red"
+    ignore $ string "red"
     pure Red
 
 
 part1 :: Input -> Int
-part1 xs = sum $ map (\g -> number g) $ filter possible xs
+part1 = sum . map (\g -> number g) . filter possible
 
 possible :: Game -> Bool
 possible gm = r <= 12 && g <= 13 && b <= 14
@@ -68,7 +68,7 @@ possible gm = r <= 12 && g <= 13 && b <= 14
         (r, g, b) = tMaxes (tokens gm)
 
 tMax :: Color -> [Token] -> Int
-tMax c ts = maximum $ map (\t -> count t) $ filter (\t -> color t == c) ts
+tMax c = maximum . map (\t -> count t) . filter (\t -> color t == c)
 
 tMaxes :: [Token] -> (Int, Int, Int)
 tMaxes ts = (tMax Red ts, tMax Green ts, tMax Blue ts)
