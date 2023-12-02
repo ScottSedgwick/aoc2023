@@ -36,27 +36,15 @@ pToken :: A.Parser Token
 pToken = do
     n <- int
     ignore $ string " "
-    c <- pColor
+    c <- pRGB
     ignore $ (ignore $ string ", ") <|> (ignore $ string "; ") <|> (ignore $ eol)
     pure $ Token { count = n, color = c }
 
-pColor :: A.Parser Color
-pColor = pBlue <|> pGreen <|> pRed
+pRGB :: A.Parser Color
+pRGB = pColor "blue" Blue <|> pColor "green" Green <|> pColor "red" Red
 
-pBlue :: A.Parser Color
-pBlue = do
-    ignore $ string "blue"
-    pure Blue
-
-pGreen :: A.Parser Color
-pGreen = do
-    ignore $ string "green"
-    pure Green
-
-pRed :: A.Parser Color
-pRed = do
-    ignore $ string "red"
-    pure Red
+pColor :: String -> Color -> A.Parser Color
+pColor s c = ignore (string s) >> pure c
 
 
 part1 :: Input -> Int
