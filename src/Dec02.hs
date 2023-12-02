@@ -7,7 +7,12 @@ import ParserUtils ( eol, ignore, int, string )
 datafile :: FilePath
 datafile = "data/Day02.txt"
 
-data Color = Blue | Red | Green deriving stock (Show, Eq)
+data Color = Blue | Red | Green deriving stock (Eq)
+
+instance Show Color where
+    show Blue = "blue"
+    show Green = "green"
+    show Red = "red"
 
 data Token = Token
     { count :: Int
@@ -41,10 +46,10 @@ pToken = do
     pure $ Token { count = n, color = c }
 
 pRGB :: A.Parser Color
-pRGB = pColor "blue" Blue <|> pColor "green" Green <|> pColor "red" Red
+pRGB = pColor Blue <|> pColor Green <|> pColor Red
 
-pColor :: String -> Color -> A.Parser Color
-pColor s c = ignore (string s) >> pure c
+pColor :: Color -> A.Parser Color
+pColor c = ignore (string (show c)) >> pure c
 
 
 part1 :: Input -> Int
