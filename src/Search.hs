@@ -3,7 +3,9 @@ module Search (bfs, bfs2, searchOrder, binSearch) where
 import qualified Data.Set as S
 import Data.Sequence ((><), Seq(..), fromList)
 
-bfs :: (state -> [state]) -> state -> [state]
+bfs :: (state -> [state])   {- successor state generator -}
+    -> state                {- initial state             -}
+    -> [state]              {- reachable states          -}
 bfs step state = if null states then [state] else concatMap (\x -> bfs step x) states 
   where
     states = step state
