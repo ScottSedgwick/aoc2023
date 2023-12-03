@@ -18,8 +18,8 @@ part1 = sum . map (strToInt . firstAndLast1 . filter isDigit)
 
 firstAndLast1 :: String -> String
 firstAndLast1 [] = "0"
-firstAndLast1 [x] = [x,x]
-firstAndLast1 xs = [head xs, last xs]
+firstAndLast1 (x:[]) = [x,x]
+firstAndLast1 (x:xs) = [x, last xs]
 
 strToInt :: String -> Int
 strToInt = read

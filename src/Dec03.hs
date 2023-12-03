@@ -92,7 +92,7 @@ prods ((Number x _ _), (Number y _ _ )) = x * y
 findPairs :: [Number] -> Symbol -> Maybe (Number, Number)
 findPairs ns s = takePair xs
     where
-        xs = filter (\n -> isAdjacent' n s) ns
+        xs = filter (flip isAdjacent' s) ns
 
 takePair :: [Number] -> Maybe (Number, Number)
 takePair [] = Nothing
