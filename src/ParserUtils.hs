@@ -4,6 +4,7 @@ module ParserUtils
   , ignore
   , int
   , intLine
+  , intSpace
   , intGroup
   , pEither
   , pFirst
@@ -12,6 +13,7 @@ module ParserUtils
   , prtParserError
   , pString
   , restOfLine
+  , spaces
   , string
   , strLine
   , strLines
@@ -54,6 +56,12 @@ intLine = do
   ignore (ignore A.newline <|> A.eof)
   pure xs
 
+intSpace :: A.Parser Int
+intSpace = do
+  x <- int
+  ignore $ (ignore (A.many (string " ")) <|> (ignore eol))
+  pure x
+
 intGroup :: Integral a => A.Parser [a]
 intGroup = do
   xs <- A.many intLine
@@ -67,6 +75,9 @@ prtParserError e = do
 
 restOfLine :: A.Parser String
 restOfLine = A.many (A.satisfy (/= '\n'))
+
+spaces :: A.Parser ()
+spaces = ignore $ A.many (string " ")
 
 string :: String -> A.Parser T.Text
 string s = T.pack <$> A.string s
