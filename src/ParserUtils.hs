@@ -56,7 +56,7 @@ intLine = do
   ignore (ignore A.newline <|> A.eof)
   pure xs
 
-intSpace :: A.Parser Int
+intSpace :: Integral a => A.Parser a
 intSpace = do
   x <- int
   ignore $ (ignore (A.many (string " ")) <|> (ignore eol))
