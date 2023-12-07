@@ -4,7 +4,7 @@ import qualified Text.Trifecta as A
 import Data.Time.Clock (getCurrentTime, diffUTCTime)
 import ParserUtils (prtParserError, pEither)
 
-import Dec04 (Input, datafile, parser, part1, part2)
+import Dec07 (Input, datafile, parser, part1, part2)
 
 main :: IO ()
 main = do
@@ -19,12 +19,14 @@ prtResult ys = do
 
     st1 <- getCurrentTime
     putStrLn "Part One: "
-    print $ part1 ys
+    p1 <- part1 ys
+    print p1
     et1 <- getCurrentTime
     putStrLn $ "Time taken: " <> show (diffUTCTime et1 st1) <> " secs."
     
     st2 <- getCurrentTime
     putStrLn "Part Two: "
-    print $ part2 ys
+    p2 <- part2 ys
+    print p2
     et2 <- getCurrentTime
     putStrLn $ "Time taken: " <> show (diffUTCTime et2 st2) <> " secs."

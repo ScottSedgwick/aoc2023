@@ -18,12 +18,16 @@ module ParserUtils
   , strLine
   , strLines
   , strN
+  , strUntil
   ) where
 
 import Control.Applicative ((<|>))
 import qualified Text.Trifecta as A
 import Data.Char (digitToInt)
 import qualified Data.Text as T
+
+strUntil :: Char -> A.Parser String
+strUntil c = A.some (A.notChar c)
 
 digitLine :: A.Parser [Int]
 digitLine = do
