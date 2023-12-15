@@ -89,7 +89,7 @@ string s = T.pack <$> A.string s
 strLine :: A.Parser String
 strLine = do
   s <- A.some (A.notChar '\n')
-  _ <- (ignore A.newline) <|> A.eof
+  _ <- (ignore A.newline) -- <|> A.eof
   pure s
 
 strLines :: A.Parser [String]
