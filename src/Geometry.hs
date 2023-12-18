@@ -1,4 +1,4 @@
-module Geometry (Pt2(..), Pt3(..), Geo(..)) where
+module Geometry (Pt2(..), Pt3(..), Geo(..), area, circumference) where
 
 import Data.Ix ( Ix(inRange, range, index) )
 import GHC.Ix (Ix(unsafeIndex, unsafeRangeSize), indexError)
@@ -67,6 +67,18 @@ instance Ix Pt2 where
   unsafeRangeSize (Pt2 lorow locol, Pt2 hirow hicol) =
     (hirow - lorow + 1) * (hicol - locol + 1)
   {-# INLINE unsafeRangeSize #-}
+
+area :: [Pt2] -> Int
+area xs = (abs (sum zs)) `div` 2
+  where
+    ys = zip xs (drop 1 $ cycle xs)
+    zs = map f ys
+    f ((Pt2 y0 x0),(Pt2 y1 x1)) = x0 * y1 - x1 * y0
+
+circumference :: [Pt2] -> Int
+circumference xs = sum (map f (zip xs (drop 1 $ cycle xs)))
+  where
+    f (p1, p2) = manhattan p1 p2
 
 data Pt3 = Pt3 !Int !Int !Int deriving stock (Read, Show, Ord, Eq)
 
